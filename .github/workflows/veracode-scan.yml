@@ -12,7 +12,7 @@ jobs:
     env:
       VERACODE_API_ID: ${{ secrets.VERACODE_API_ID }}
       VERACODE_API_KEY: ${{ secrets.VERACODE_API_KEY }}
-      GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+      GH_PAT: ${{ secrets.GH_PAT }}
 
     steps:
     - name: Checkout this repo
