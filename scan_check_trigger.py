@@ -99,7 +99,7 @@ def upload_and_scan(app_name, artifact_paths):
             "-vid", API_ID,
             "-vkey", API_KEY,
             "-appname", app_name,
-            "-createprofile", "true",
+            "-createprofile", "false",
             "-version", version,
             "-filepath", artifact_dir
         ], check=True)
