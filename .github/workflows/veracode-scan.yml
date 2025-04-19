@@ -1,0 +1,44 @@
+name: Veracode Scan Orchestrator
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *"  # Run daily at 6 AM UTC
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+
+    env:
+      VERACODE_API_ID: ${{ secrets.VERACODE_API_ID }}
+      VERACODE_API_KEY: ${{ secrets.VERACODE_API_KEY }}
+      GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+
+    steps:
+    - name: Checkout this repo
+      uses: actions/checkout@v4
+
+    - name: Install Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.x
+
+    - name: Install Veracode CLI
+      run: |
+        curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+        sudo mv veracode /usr/local/bin/veracode
+
+    - name: Install Python Dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Download Veracode Java API Wrapper
+      run: |
+        mkdir -p .veracode
+        VERSION=$(curl -s https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/maven-metadata.xml | grep -oPm1 "(?<=<latest>)[^<]+")
+        curl -L "https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/${VERSION}/vosp-api-wrappers-java-${VERSION}-dist.zip" -o .veracode/dist.zip
+        unzip -o .veracode/dist.zip -d .veracode
+        find .veracode -name "VeracodeJavaAPI.jar" -exec cp {} vosp-api-wrapper-java.jar \;
+
+    - name: Run Veracode Scan Python Script
+      run: python scan_check_trigger.py
