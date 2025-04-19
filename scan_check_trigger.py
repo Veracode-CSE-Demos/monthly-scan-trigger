@@ -16,9 +16,9 @@ JAVA_WRAPPER_JAR = "vosp-api-wrapper-java.jar"
 # Secrets
 API_ID = os.environ.get("VERACODE_API_ID")
 API_KEY = os.environ.get("VERACODE_API_KEY")
-GITHUB_PAT = os.environ.get("GITHUB_PAT")
+GH_PAT = os.environ.get("GH_PAT")
 
-if not all([API_ID, API_KEY, GITHUB_PAT]):
+if not all([API_ID, API_KEY, GH_PAT]):
     raise EnvironmentError("[ERROR] Required environment variables are not set.")
 
 # Authenticated Veracode session
@@ -60,7 +60,7 @@ def clone_repo(app_name):
         raise ValueError(f"App name '{app_name}' is not in 'org/repo' format.")
 
     org, repo = app_name.split("/", 1)
-    url = f"https://{GITHUB_PAT}:x-oauth-basic@github.com/{org}/{repo}.git"
+    url = f"https://{GH_PAT}:x-oauth-basic@github.com/{org}/{repo}.git"
 
     if os.path.exists(CLONE_DIR):
         shutil.rmtree(CLONE_DIR)
