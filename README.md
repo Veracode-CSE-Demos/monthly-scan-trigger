@@ -35,6 +35,7 @@ To add them:
 1. Go to [github.com/settings/tokens](https://github.com/settings/tokens)
 2. Create a **Personal Access Token (classic)** with:
    - ✅ `repo` scope (to clone private repos)
+   - This PAT would need to be setup with access to the desired orgs repos.
 3. Add it to your repo as `GH_PAT`.
 
 ---
