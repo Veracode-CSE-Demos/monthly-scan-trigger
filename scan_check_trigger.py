@@ -3,6 +3,7 @@ import subprocess
 import shutil
 from datetime import datetime, timezone
 import requests
+from urllib.parse import quote  # <-- added
 
 from veracode_api_signing.plugin_requests import RequestsAuthPluginVeracodeHMAC
 
@@ -86,7 +87,10 @@ def clone_repo(app_name):
         raise ValueError(f"Invalid app name '{app_name}'. Must be org/repo.")
 
     org, repo = app_name.split("/", 1)
-    url = f"https://{GH_PAT}:x-oauth-basic@github.com/{org}/{repo}.git"
+
+    # Now works with SAML-authorized PATs
+    pat_enc = quote(GH_PAT, safe="")
+    url = f"https://x-access-token:{pat_enc}@github.com/{org}/{repo}.git"
 
     if os.path.exists(CLONE_DIR):
         shutil.rmtree(CLONE_DIR)
