@@ -3,7 +3,7 @@ import subprocess
 import shutil
 from datetime import datetime, timezone
 import requests
-from urllib.parse import quote  # <-- added
+from urllib.parse import quote  # ← added
 
 from veracode_api_signing.plugin_requests import RequestsAuthPluginVeracodeHMAC
 
@@ -88,7 +88,6 @@ def clone_repo(app_name):
 
     org, repo = app_name.split("/", 1)
 
-    # Now works with SAML-authorized PATs
     pat_enc = quote(GH_PAT, safe="")
     url = f"https://x-access-token:{pat_enc}@github.com/{org}/{repo}.git"
 
