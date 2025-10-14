@@ -11,7 +11,7 @@ It reads Veracode application profiles, finds associated GitHub repositories (`o
 
 ---
 
-## ⚙️ Setup Instructions
+## Setup Instructions
 
 ### Required GitHub Secrets
 
@@ -35,7 +35,7 @@ To add them:
 3. Give it a descriptive name (e.g. `veracode-scan-pat`) and choose:
 
    * **Expiration:** as required by your org (90 days recommended).
-   * **Scope:** ✅ `repo` (needed to clone private repos).
+   * **Scope:** `repo` (needed to clone private repos).
 4. Click **Generate token**, then copy the value shown — GitHub will only display it once.
 5. If your organization **enforces SAML SSO**, you’ll now see a section titled **“SSO Authorization”** below the token:
 
@@ -50,7 +50,7 @@ To add them:
 
 ---
 
-### 🧠 How It Works
+### How It Works
 
 1. The workflow (`.github/workflows/veracode-scan-orchestrator.yml`) runs daily at **6 AM UTC** or manually via “Run workflow.”
 2. The Python script (`scan_check_trigger.py`):
@@ -64,7 +64,7 @@ To add them:
 
 ---
 
-### 🧰 Tools Used
+### Tools Used
 
 * [Veracode CLI](https://docs.veracode.com/r/veracode_package)
 * [Veracode Java API Wrapper](https://docs.veracode.com/r/r_uploadfile)
@@ -72,7 +72,7 @@ To add them:
 
 ---
 
-### 🧩 Notes
+### Notes
 
 * The PAT (`GH_PAT`) must belong to a user or bot account with read access to the target repositories.
 * If your organization later enables SAML SSO, you’ll need to return to the token page and click **Configure SSO → Authorize** to continue using it.
